@@ -1,0 +1,4 @@
+C:\Users\sebastian\Desktop\practicaFinalEstructuras\practicaFinalEstructuras\bin\Debug\huffmanCompressor.exe
+C:\Users\sebastian\Desktop\practicaFinalEstructuras\practicaFinalEstructuras\bin\Debug\huffmanCompressor.pdb
+C:\Users\sebastian\Desktop\practicaFinalEstructuras\practicaFinalEstructuras\obj\x86\Debug\huffmanCompressor.exe
+C:\Users\sebastian\Desktop\practicaFinalEstructuras\practicaFinalEstructuras\obj\x86\Debug\huffmanCompressor.pdb
