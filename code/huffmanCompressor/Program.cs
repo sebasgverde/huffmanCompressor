@@ -67,6 +67,15 @@ namespace practicaFinalEstructuras
             return arr;
         }
 
+        public static string bytesArrayToString(byte[] byteArray)
+        {
+            string yourByteString = "";
+            for (int i = 0; i < byteArray.Length; i++)
+                yourByteString += Convert.ToString(byteArray[i], 2).PadLeft(8, '0');
+
+            return yourByteString;
+        }
+
         //ordena la lista de prioridades segun la frecuencia para armar el arbol
         public static List<Arbol> ordenar(List<Arbol> a)
         {
@@ -348,8 +357,14 @@ namespace practicaFinalEstructuras
             //string inputPath = args[1];
             //string outputPath = args[2];
 
-            int mode = 0;
-            string inputPath = "C:/Users/sebastian/Desktop/test.txt";
+            //// test compress
+            //int mode = 0;
+            //string inputPath = "C:/Users/sebastian/Desktop/test.txt";
+            //string outputPath = "C:/Users/sebastian/Desktop/testOutput";
+
+            //test decompress
+            int mode = 1;
+            string inputPath = "C:/Users/sebastian/Desktop/testOutput";
             string outputPath = "C:/Users/sebastian/Desktop/testOutput";
 
             //Console.WriteLine(args.Length + " " + args[0] + " " + args[1]);
@@ -469,10 +484,24 @@ namespace practicaFinalEstructuras
                     texto = sr.ReadLine();
                     while (texto != null)
                     {
-                        textoBin += texto;
+                        //textoBin += texto;
                         texto = sr.ReadLine();
                     }
                     sr.Close();
+
+                    string myString;
+                    using (FileStream fs = new FileStream(inputPath + "/compressedFile.dat", FileMode.Open))
+                    using (BinaryReader br = new BinaryReader(fs))
+                    {
+                        byte[] binaryArray = br.ReadBytes(Convert.ToInt32(fs.Length));
+                        textoBin = bytesArrayToString(binaryArray);
+
+                        int correctionFactor = 7;
+
+                        textoBin = textoBin.Substring((8 - correctionFactor), textoBin.Length - (8 - correctionFactor));
+                    }
+
+                    
                 }
                 catch (Exception ex)
                 {
