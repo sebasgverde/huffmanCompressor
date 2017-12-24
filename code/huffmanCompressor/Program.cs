@@ -46,6 +46,27 @@ namespace practicaFinalEstructuras
 
     public class Program
     {
+        public static byte[] StringToBytesArray(string str)
+        {
+            var bitsToPad = 8 - str.Length % 8;
+
+            if (bitsToPad != 8)
+            {
+                var neededLength = bitsToPad + str.Length;
+                str = str.PadLeft(neededLength, '0');
+            }
+
+            int size = str.Length / 8;
+            byte[] arr = new byte[size];
+
+            for (int a = 0; a < size; a++)
+            {
+                arr[a] = Convert.ToByte(str.Substring(a * 8, 8), 2);
+            }
+
+            return arr;
+        }
+
         //ordena la lista de prioridades segun la frecuencia para armar el arbol
         public static List<Arbol> ordenar(List<Arbol> a)
         {
@@ -313,19 +334,23 @@ namespace practicaFinalEstructuras
 
         public static int Main(string[] args)
         {
-            if (args.Length < 3)
-            {
-                System.Console.WriteLine("Please enter one of the next posibilities of parameter");
-                System.Console.WriteLine("to compress: 0 <path to text file> <path to output>");
-                System.Console.WriteLine("to decompress: 1 <path to compressed file and keys file> <path to output>");
-                return 1;
-            }
+            //if (args.Length < 3)
+            //{
+            //    System.Console.WriteLine("Please enter one of the next posibilities of parameter");
+            //    System.Console.WriteLine("to compress: 0 <path to text file> <path to output>");
+            //    System.Console.WriteLine("to decompress: 1 <path to compressed file and keys file> <path to output>");
+            //    return 1;
+            //}
 
-            Console.WriteLine(args[0] + " " + args[1] + " " + args[2]);
+            //Console.WriteLine(args[0] + " " + args[1] + " " + args[2]);
 
-            int mode = Int32.Parse(args[0]);
-            string inputPath = args[1];
-            string outputPath = args[2];
+            //int mode = Int32.Parse(args[0]);
+            //string inputPath = args[1];
+            //string outputPath = args[2];
+
+            int mode = 0;
+            string inputPath = "C:/Users/sebastian/Desktop/test.txt";
+            string outputPath = "C:/Users/sebastian/Desktop/testOutput";
 
             //Console.WriteLine(args.Length + " " + args[0] + " " + args[1]);
             List<Arbol> codific = new List<Arbol>();
@@ -385,8 +410,21 @@ namespace practicaFinalEstructuras
 
                     string textoCom = comprimir(textOriginal, a);
 
+                    int lenlen = textoCom.Length;
+                    byte[] arr = StringToBytesArray(textoCom);
+
                     writer.WriteLine(textoCom);
 
+                    Stream stream = new FileStream(outputPath + "/compressedFile.dat", FileMode.Create);
+                    BinaryWriter bw = new BinaryWriter(stream);
+
+                    foreach (var b in arr)
+                    {
+                        bw.Write(b);
+                    }
+
+                    bw.Flush();
+                    bw.Close();
 
                     writer.Close();
                 }
