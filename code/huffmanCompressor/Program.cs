@@ -311,21 +311,35 @@ namespace practicaFinalEstructuras
             return frecuencias;
         }
 
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
+            if (args.Length < 3)
+            {
+                System.Console.WriteLine("Please enter one of the next posibilities of parameter");
+                System.Console.WriteLine("to compress: 0 <path to text file> <path to output>");
+                System.Console.WriteLine("to decompress: 1 <path to compressed file and keys file> <path to output>");
+                return 1;
+            }
+
+            Console.WriteLine(args[0] + " " + args[1] + " " + args[2]);
+
+            int mode = Int32.Parse(args[0]);
+            string inputPath = args[1];
+            string outputPath = args[2];
+
+            //Console.WriteLine(args.Length + " " + args[0] + " " + args[1]);
             List<Arbol> codific = new List<Arbol>();
 
-            Console.WriteLine("Para usar codificacionHuffman ingrese 1 para descomprimir un archivo ingrese 2");
-            if (Console.ReadLine() == "1")
+            if (mode == 0)
             {
-                Console.WriteLine("Ingrese el nombre del archivo");
-                string nomTxt = Console.ReadLine();
+                //Console.WriteLine("Ingrese el nombre del archivo");
+                //string nomTxt = Console.ReadLine();
                 //leer txt original
                 string textOriginal = "";
                 try
                 {
                     string texto;
-                    StreamReader sr = new StreamReader(nomTxt);
+                    StreamReader sr = new StreamReader(inputPath);
                     texto = sr.ReadLine();
                     while (texto != null)
                     {
@@ -346,8 +360,8 @@ namespace practicaFinalEstructuras
                 //crear txt con las claves
                 try
                 {
-                    File.Delete("clavesArchivo.txt");
-                    string fileName = "clavesArchivo.txt";
+                    File.Delete(outputPath + "/keysFile.txt");
+                    string fileName = outputPath + "/keysFile.txt";
                     StreamWriter writer = File.AppendText(fileName);
 
                     for (int i = 0; i < a.Count; i++)
@@ -359,14 +373,14 @@ namespace practicaFinalEstructuras
                 }
                 catch
                 {
-                    Console.WriteLine("Error al decodificar");
+                    Console.WriteLine("Decoding Error");
                 }
 
                 //crear txt comprimido
                 try
                 {
-                    File.Delete("textoComprimido.txt");
-                    string fileName = "textoComprimido.txt";
+                    File.Delete(outputPath + "/compressedFile.txt");
+                    string fileName = outputPath + "/compressedFile.txt";
                     StreamWriter writer = File.AppendText(fileName);
 
                     string textoCom = comprimir(textOriginal, a);
@@ -378,7 +392,7 @@ namespace practicaFinalEstructuras
                 }
                 catch
                 {
-                    Console.WriteLine("Error al decodificar");
+                    Console.WriteLine("Decoding Error");
                 }
 
                 Console.ReadKey();
@@ -389,7 +403,7 @@ namespace practicaFinalEstructuras
                 try
                 {
                     string texto;
-                    StreamReader sr = new StreamReader("clavesArchivo.txt");
+                    StreamReader sr = new StreamReader(inputPath + "/keysFile.txt");
                     texto = sr.ReadLine();
                     while (texto != null)
                     {
@@ -413,7 +427,7 @@ namespace practicaFinalEstructuras
                 try
                 {
                     string texto;
-                    StreamReader sr = new StreamReader("textoComprimido.txt");
+                    StreamReader sr = new StreamReader(inputPath + "/compressedFile.txt");
                     texto = sr.ReadLine();
                     while (texto != null)
                     {
@@ -428,8 +442,8 @@ namespace practicaFinalEstructuras
                 }
                 try
                 {
-                    File.Delete("textoDescomprimido.txt");
-                    string fileName = "textoDescomprimido.txt";
+                    File.Delete(outputPath + "/decompressedFile.txt");
+                    string fileName = outputPath + "/decompressedFile.txt";
                     StreamWriter writer = File.AppendText(fileName);
 
                     writer.WriteLine(decodificacionHuffman(codific, textoBin));
@@ -440,12 +454,13 @@ namespace practicaFinalEstructuras
                 }
                 catch
                 {
-                    Console.WriteLine("Error al decodificar");
+                    Console.WriteLine("Decoding Error");
                 }
 
                 Console.ReadKey();
 
             }
+            return 0;
         }
     }
 }
