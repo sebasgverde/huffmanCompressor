@@ -151,61 +151,6 @@ namespace practicaFinalEstructuras
             return codificacion;
         }
 
-     /* 
-      * forma de sacar el codigo del arbol desechada despues de ver su complejidad
-      * public static List<Arbol> codigoHuffman(Arbol A)
-        {
-            List<Arbol> pila = new List<Arbol>();
-            List<Arbol> codificacion = new List<Arbol>();
-            string binario = "";
-            while (A != null || pila.Count > 0)
-            {
-                if (A.hijoIzq != null)
-                {
-                    binario += "0";
-                    pila.Add(A);
-                    A = A.hijoIzq;
-                }
-                else if (A.hijoDer != null)
-                {
-                    binario += "1";
-                    pila.Add(A);
-                    A = A.hijoDer;
-                }
-
-                else if (A.hijoIzq == null && A.hijoDer == null)
-                {
-                    if (A.letra != null)
-                    {
-                        Arbol a = new Arbol();
-                        a.letra = A.letra;
-                        a.frec = binario;
-                        codificacion.Add(a);
-                        //binario = binario.Remove(binario.Length - 1);
-                    }
-
-                    if (binario[binario.Length - 1] == '0')
-                    {
-                        binario = binario.Remove(binario.Length - 1);
-                        A = pila[pila.Count - 1];
-                        pila.RemoveAt(pila.Count - 1);
-                        pila.Add(A.hijoDer);
-                        A.hijoIzq = null;
-
-                    }
-                    else
-                    {
-                        binario = binario.Remove(binario.Length - 1);
-                        A = pila[pila.Count - 1];
-                        pila.RemoveAt(pila.Count - 1);
-                        pila.Add(A.hijoDer);
-                        A.hijoDer = null;
-                    }
-                }
-            }
-            return codificacion;
-        }*/
-
         //este es el metodo encargado de armar el arbol recibiendo las letras con su frecuencia y devolver el codigo huffman de cada letra
         public static List<Arbol> codificacionHuffman(List<Arbol> codigoFrec)
         {
@@ -343,29 +288,30 @@ namespace practicaFinalEstructuras
 
         public static int Main(string[] args)
         {
-            //if (args.Length < 3)
-            //{
-            //    System.Console.WriteLine("Please enter one of the next posibilities of parameter");
-            //    System.Console.WriteLine("to compress: 0 <path to text file> <path to output>");
-            //    System.Console.WriteLine("to decompress: 1 <path to compressed file and keys file> <path to output>");
-            //    return 1;
-            //}
+            if (args.Length < 3)
+            {
+                System.Console.WriteLine("Please enter one of the next posibilities of parameter");
+                System.Console.WriteLine("to compress: 0 <path to text file> <path to output>");
+                System.Console.WriteLine("to decompress: 1 <path to compressed file and keys file> <path to output>");
+                return 1;
+            }
 
+            int mode = Int32.Parse(args[0]);
+            string inputPath = args[1];
+            string outputPath = args[2];
+
+            
             //Console.WriteLine(args[0] + " " + args[1] + " " + args[2]);
-
-            //int mode = Int32.Parse(args[0]);
-            //string inputPath = args[1];
-            //string outputPath = args[2];
 
             //// test compress
             //int mode = 0;
             //string inputPath = "C:/Users/sebastian/Desktop/test.txt";
             //string outputPath = "C:/Users/sebastian/Desktop/testOutput";
 
-            //test decompress
-            int mode = 1;
-            string inputPath = "C:/Users/sebastian/Desktop/testOutput";
-            string outputPath = "C:/Users/sebastian/Desktop/testOutput";
+            ////test decompress
+            //int mode = 1;
+            //string inputPath = "C:/Users/sebastian/Desktop/testOutput";
+            //string outputPath = "C:/Users/sebastian/Desktop/testOutput";
 
             //Console.WriteLine(args.Length + " " + args[0] + " " + args[1]);
             List<Arbol> codific = new List<Arbol>();
@@ -424,24 +370,31 @@ namespace practicaFinalEstructuras
                     StreamWriter writer = File.AppendText(fileName);
 
                     string textoCom = comprimir(textOriginal, a);
+                    
+                    writer.WriteLine(textoCom);
+                    writer.Close();
 
-                    int lenlen = textoCom.Length;
                     byte[] arr = StringToBytesArray(textoCom);
 
-                    writer.WriteLine(textoCom);
+                    // as one just can write complete bytes, we need a way to know which
+                    // bits are just fillers and should be discarda when decode
+                    int correctionFactor = (arr.Length * 8) - textoCom.Length;
+
+                    //Insert correction factor at begining
+                    byte[] newValues = new byte[arr.Length + 1];
+                    newValues[0] = Convert.ToByte(correctionFactor);
+                    Array.Copy(arr, 0, newValues, 1, arr.Length);
 
                     Stream stream = new FileStream(outputPath + "/compressedFile.dat", FileMode.Create);
                     BinaryWriter bw = new BinaryWriter(stream);
 
-                    foreach (var b in arr)
+                    foreach (var b in newValues)
                     {
                         bw.Write(b);
                     }
 
                     bw.Flush();
                     bw.Close();
-
-                    writer.Close();
                 }
                 catch
                 {
@@ -494,11 +447,17 @@ namespace practicaFinalEstructuras
                     using (BinaryReader br = new BinaryReader(fs))
                     {
                         byte[] binaryArray = br.ReadBytes(Convert.ToInt32(fs.Length));
-                        textoBin = bytesArrayToString(binaryArray);
 
-                        int correctionFactor = 7;
+                        // Extract the correction factor and remove from array before continue decoding
+                        int correctionFactor = binaryArray[0];
+                        byte[] newValues = new byte[binaryArray.Length - 1];
+                        Array.Copy(binaryArray, 1, newValues, 0, newValues.Length);
 
-                        textoBin = textoBin.Substring((8 - correctionFactor), textoBin.Length - (8 - correctionFactor));
+                        textoBin = bytesArrayToString(newValues);
+
+                        
+
+                        textoBin = textoBin.Substring(correctionFactor, textoBin.Length - correctionFactor);
                     }
 
                     
