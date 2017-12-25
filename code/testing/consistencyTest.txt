@@ -1,0 +1,1 @@
+Hello, I am Sebastian and this is a test for consistency in the huffman compressor.
