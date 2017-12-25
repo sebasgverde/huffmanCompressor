@@ -1,5 +1,10 @@
 This is a compressor for text files based in Huffman codes and binary trees. Given a text, it creates a tree based in the symbol frequencies. This way, the more frequent is a symbol, the less bits it needs to represent it. When it compresses a file, a dictionary with the pair symbol-code is created to decode (decompress). Also 2 versions of a compressed file, a .txt with the binary string and a binary .dat which is the actual compressed file.
 
+
+# Demo
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jkEBqMtMb2M/0.jpg)](https://www.youtube.com/watch?v=jkEBqMtMb2M)
+
 # Use
 The tool is a console app, it has 2 functions with their respective command:
 
@@ -16,11 +21,7 @@ The tool is a console app, it has 2 functions with their respective command:
     huffmanCompressor.exe 1 <path to .dat and keys> <path to output>
     ```
     
-
-# Demo
-
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jkEBqMtMb2M/0.jpg)](https://www.youtube.com/watch?v=jkEBqMtMb2M)
-
+	
 # Spacial complexity Analysis
 
 As we can see in source code, both programs are merged in the main and are separated by an if statement. Therefore, we will start for each one from the try-catch blocks that read the txt and we will take only elements with size bigger than 1.
