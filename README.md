@@ -1,4 +1,21 @@
-This a compressor for text files based in Huffman codes and binary trees
+This is a compressor for text files based in Huffman codes and binary trees. Given a text, it creates a tree based in the symbol frequencies. This way, the more frequent is a symbol, the less bits it needs to represent it. When it compresses a file, a dictionary with the pair symbol-code is created to decode (decompress). Also 2 versions of a compressed file, a .txt with the binary string and a binary .dat which is the actual compressed file.
+
+# Use
+The tool is a console app, it has 2 functions with their respective command:
+
+- Compress:  This command will create 3 files in <path to output> folder: kesyFile.txt, compressedFile.txt and compressedFile.dat
+
+    ```bash
+    huffmanCompressor.exe 0 <path to text file> <path to output>
+    ```
+
+    
+- Decompress: This will create one file called decompressedFile.txt in <path to output> folder
+
+    ```bash
+    huffmanCompressor.exe 1 <path to .dat and keys> <path to output>
+    ```
+    
 
 # Demo
 
@@ -6,7 +23,7 @@ This a compressor for text files based in Huffman codes and binary trees
 
 # Spacial complexity Analysis
 
-As we can see in source code, both programms are merged in the main and are separated by an if statement. Therefore, we will start for each one from the try-catch bloks that read the txt and we will take only elemnts with size bigger than 1. 
+As we can see in source code, both programs are merged in the main and are separated by an if statement. Therefore, we will start for each one from the try-catch blocks that read the txt and we will take only elements with size bigger than 1.
 
 ## Huffman codification
 Ordenar()
@@ -79,7 +96,7 @@ Main() =2n +m +n +2m = 3n + 3m
 
 # Temporal Complexity analysis
 
-As we can see in source code, both programms are merged in the main and are separated by an if statement. Therefore, we will start for each one from the try-catch bloks that read the txt and in the cases where there are loops with flags we will take only the worse of the cases.
+As we can see in source code, both programs are merged in the main and are separated by an if statement. Therefore, we will start for each one from the try-catch blocks that read the .txt and in the cases where there are loops with flags we will take only the worse of the cases.
 
 ## Huffman codification
 
