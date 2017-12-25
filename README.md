@@ -1,4 +1,8 @@
-This a compressor for text files based in Huffman codes and bynary trees
+This a compressor for text files based in Huffman codes and binary trees
+
+# Demo
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jkEBqMtMb2M/0.jpg)](https://www.youtube.com/watch?v=jkEBqMtMb2M)
 
 # Spacial complexity Analysis
 
@@ -8,40 +12,40 @@ As we can see in source code, both programms are merged in the main and are sepa
 Ordenar()
 Arreglo tamaño n
 ordenar = n
-
+/*****************************/
 ### buscarPosicion()
 arreglo tamaño n
 árbol tamaño m
 
 buscarPosicion() = n +m
-
+/******************************/
 ### recorridoArbol()
 2 listas tamaño n
 árbol tamaño m
 
 recorridoArbol() = 2n + m
-
+/********************************/
 ### codificacionHuffman()
 lista tamaño n
 buscarPosicion() = n + m
 recorridoArbol() = 2n + m
 
 codificacionHuffman() = 3n + 2m
-
+/*******************************************/
 ### Comprimir()
 Lista tamaño n
 Texto tamaño n
 Texto tamaño m
 
 Comprimir() = 2n + m
-
+/*******************************************/
 ### contarFrec()
 texto tamaño n
 lista tamaño m
 
 contarFrec() =  n + m
 
-
+/***************************************/
 
 
 ### Main()
@@ -54,7 +58,7 @@ Comprimir() = n + m
 Main() = n + 2m +n +m +2n +m +n+m = 5n + 5m
 
 
-# Huffman decodification
+## Huffman decodification
 
 ### decodificacionHuffman()
 texto tamaño n
@@ -63,7 +67,7 @@ lista tamaño m
 
 decodificacionHuffman() = n + 2m
 
-
+/******************************/
 ### Main()
 Lista tamaño n
 Texto tamaño m
@@ -86,14 +90,14 @@ Para j = 1 a n
 Fin para
 fin para
 ordenar = n2
-
+/*****************************/
 ### buscarPosicion()
 c
 mientras 1 a n
 	c
 fin mientras
 buscarPosicion() = n
-
+/******************************/
 ### recorridoArbol()
 c
 mientras  1 a n
@@ -104,7 +108,7 @@ mientras  1 a n
 fin mientras
 
 recorridoArbol() = n
-
+/********************************/
 ### codificacionHuffman()
 ordenar = n2
 mientras 1 a n
@@ -114,7 +118,7 @@ fin mientras
 recorridoArbol() = n
 
 codificacionHuffman() = n2 + n2 +n = 2 n2
-
+/*******************************************/
 ### Comprimir()
 C
 Para 1 a n
@@ -124,7 +128,7 @@ Para 1 a n
 Fin para
 
 Comprimir() = n2
-
+/*******************************************/
 ### contarFrec()
 c
 mientras 1 a n
@@ -137,7 +141,7 @@ c
 
 contarFrec() =  n2
 
-
+/***************************************/
 
 
 ### Main()
@@ -180,7 +184,7 @@ c
 
 decodificacionHuffman() = n2 + n = n2
 
-
+/******************************/
 ### Main()
 Try
 Mientras 1 a n
