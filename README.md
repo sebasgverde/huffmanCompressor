@@ -1,4 +1,8 @@
-This a compressor for text files based in Huffman codes and bynary trees
+This a compressor for text files based in Huffman codes and binary trees
+
+# Demo
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/jkEBqMtMb2M/0.jpg)](https://www.youtube.com/watch?v=jkEBqMtMb2M)
 
 # Spacial complexity Analysis
 
@@ -54,7 +58,7 @@ Comprimir() = n + m
 Main() = n + 2m +n +m +2n +m +n+m = 5n + 5m
 
 
-# Huffman decodification
+## Huffman decodification
 
 ### decodificacionHuffman()
 texto tamaño n
